@@ -6,16 +6,17 @@ import javax.swing.JFrame;
 
 public class BounceInvader extends JComponent implements Runnable {
 
-
+		BounceImage moon;
 	
 	public BounceInvader() {
+moon = new BounceImage(0, 0);
 
 		Thread t = new Thread(this);
 		t.start();
 	}
 	
 	public void paint(Graphics g) {
-
+		moon.paint(g, this);
 	}
 	
 	public static void main(String[] args) {
@@ -30,6 +31,7 @@ public class BounceInvader extends JComponent implements Runnable {
 	@Override
 	public void run() {
 		while(true) {
+		moon.update();
 
 			repaint();
 			try {
