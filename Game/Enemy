@@ -6,8 +6,8 @@ import java.awt.image.ImageObserver;
 public class Enemy {
 	
 	int x, y;
-	double vx = Math.random()*20;
-	double vy = Math.random()*20;
+	double vx = 2;
+	//double vy = Math.random()*20;
 	
 	Image img = Toolkit.getDefaultToolkit().getImage("Space-invader.png");
 	
@@ -18,18 +18,28 @@ public class Enemy {
 	}
 	
 	
+	public boolean reachedEdge(int xCoord){
+		return xCoord >= 650 || xCoord <= 0;
+	}
+	
 	
 	
 	public void update(){
 		this.x += (int) this.vx;
-		this.y += (int) this.vy;
 		
-		if(this.x >= 650 || this.x <= 0){
+		/*if(this.x >= 650 || this.x <= 0){
+			this.vx = -this.vx;
+			this.y += 50;
+		}*/
+		
+		//this.y += (int) this.vy;
+		
+		/*if(this.x >= 650 || this.x <= 0){
 			this.vx = -this.vx;
 		}
 		if(this.y >= 650 || this.y <= 0){
 			this.vy = -this.vy;
-		}
+		}*/
 	}
 	
 	public void paint(Graphics g, ImageObserver io){
