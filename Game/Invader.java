@@ -11,10 +11,10 @@ public class Invader extends JComponent implements Runnable {
 	
 	public Invader() {
 		
-		int x = 70, y = 50;
+		int x = 70, y = 70;
 		
-		for(int i = 0; i < 5; i++){
-			for(int j = 0; j < 10; j++){
+		for(int i = 1; i < 3; i++){
+			for(int j = 2; j < 8; j++){
 				enemy.add(new Enemy(j*x, i*y));
 			}	
 			System.out.println("Y: " + enemy.get(i).y + "X: " + enemy.get(i).x);
@@ -42,7 +42,21 @@ public class Invader extends JComponent implements Runnable {
 	@Override
 	public void run() {
 		while (true) {
-
+			for(Enemy e : enemy){
+				e.update();
+			}
+			if(enemy.get(5).reachedEdge(enemy.get(5).x) || enemy.get(0).reachedEdge(enemy.get(0).x)){
+				for(int i = 0; i < 6; i++){
+					enemy.get(i).y += 50;
+					enemy.get(i).vx = -enemy.get(i).vx; 
+				}
+			}
+			if(enemy.get(11).reachedEdge(enemy.get(11).x) || enemy.get(6).reachedEdge(enemy.get(6).x)){
+				for(int i = 6; i < 12; i++){
+					enemy.get(i).y += 50;
+					enemy.get(i).vx = -enemy.get(i).vx; 
+				}
+			}
 			repaint();
 			try {
 				Thread.sleep(30);
