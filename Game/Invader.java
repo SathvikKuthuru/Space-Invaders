@@ -1,13 +1,16 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
-public class Invader extends JComponent implements Runnable {
+public class Invader extends JComponent implements Runnable, KeyListener {
 
 	ArrayList<Enemy> enemy = new ArrayList<Enemy>();
+	Player player = new Player();
 	
 	public Invader() {
 		
@@ -17,8 +20,9 @@ public class Invader extends JComponent implements Runnable {
 			for(int j = 2; j < 8; j++){
 				enemy.add(new Enemy(j*x, i*y));
 			}	
-			System.out.println("Y: " + enemy.get(i).y + "X: " + enemy.get(i).x);
+			
 		}
+		
 
 		Thread t = new Thread(this);
 		t.start();
@@ -28,14 +32,18 @@ public class Invader extends JComponent implements Runnable {
 		for(Enemy e : enemy){
 			e.paint(g, this);
 		}
+		
+		player.paint(g, this);
 	}
 
 	public static void main(String[] args) {
+		Invader in = new Invader();
 		JFrame frame = new JFrame("Dencker is better thaN EVERYTHING!");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(700, 700);
 		frame.setVisible(true);
-		frame.add(new Invader());
+		frame.add(in);
+		frame.addKeyListener(in);
 		frame.getContentPane().setBackground(Color.black);
 	}
 
@@ -57,6 +65,7 @@ public class Invader extends JComponent implements Runnable {
 					enemy.get(i).vx = -enemy.get(i).vx; 
 				}
 			}
+			
 			repaint();
 			try {
 				Thread.sleep(30);
@@ -65,6 +74,29 @@ public class Invader extends JComponent implements Runnable {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getKeyCode() == 37){
+			player.moveLeft();
+		}
+		if(e.getKeyCode() == 39){
+			player.moveRight();
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
