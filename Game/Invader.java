@@ -11,6 +11,7 @@ public class Invader extends JComponent implements Runnable, KeyListener {
 
 	ArrayList<Enemy> enemy = new ArrayList<Enemy>();
 	Player player = new Player();
+	Bullet bullet = new Bullet();
 	
 	public Invader() {
 		
@@ -33,7 +34,9 @@ public class Invader extends JComponent implements Runnable, KeyListener {
 			e.paint(g, this);
 		}
 		
+		bullet.paint(g, this);
 		player.paint(g, this);
+
 	}
 
 	public static void main(String[] args) {
@@ -66,6 +69,8 @@ public class Invader extends JComponent implements Runnable, KeyListener {
 				}
 			}
 			
+			bullet.x = player.x;
+			
 			repaint();
 			try {
 				Thread.sleep(30);
@@ -85,6 +90,11 @@ public class Invader extends JComponent implements Runnable, KeyListener {
 		if(e.getKeyCode() == 39){
 			player.moveRight();
 		}
+		if(e.getKeyCode() == 32){
+			bullet.update();
+		}
+		
+		System.out.println(e.getKeyCode());
 	}
 
 	@Override
