@@ -13,10 +13,10 @@ public class Bullet {
 	
 	
 	public Bullet() {
-		this.x = 300;
+		this.x = 387;
 		this.y = 600;
 		this.vx = 0;
-		this.vy = 3;
+		this.vy = 9;
 	}
 	
 
@@ -27,7 +27,11 @@ public class Bullet {
 	
 	
 	public void update() {
-		this.y += this.vy;
+		this.y -= this.vy;
+	}
+	
+	public boolean doesHit(int x, int y){
+		return this.x <= x + 50 && this.y <= y+50;
 	}
 	
 	
