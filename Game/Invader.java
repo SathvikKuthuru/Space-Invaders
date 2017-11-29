@@ -12,6 +12,7 @@ public class Invader extends JComponent implements Runnable, KeyListener {
 	ArrayList<Enemy> enemy = new ArrayList<Enemy>();
 	Player player = new Player();
 	Bullet bullet = new Bullet();
+	static boolean b = false;
 	
 	public Invader() {
 		
@@ -68,9 +69,19 @@ public class Invader extends JComponent implements Runnable, KeyListener {
 					enemy.get(i).vx = -enemy.get(i).vx; 
 				}
 			}
-			
-			bullet.x = player.x;
-			
+			for(int i = enemy.size()-1; i >= 0; i--){
+				if(b && !bullet.doesHit(enemy.get(i).x, enemy.get(i).y)){
+					bullet.update();
+
+				}
+				else{
+					if(bullet.doesHit(enemy.get(i).x, enemy.get(i).y)) enemy.remove(enemy.get(i));
+					bullet.x =  player.x + 37;
+					bullet.y = 600;
+					break;
+				}
+			}
+
 			repaint();
 			try {
 				Thread.sleep(30);
@@ -90,9 +101,7 @@ public class Invader extends JComponent implements Runnable, KeyListener {
 		if(e.getKeyCode() == 39){
 			player.moveRight();
 		}
-		if(e.getKeyCode() == 32){
-			bullet.update();
-		}
+
 		
 		System.out.println(e.getKeyCode());
 	}
@@ -100,6 +109,9 @@ public class Invader extends JComponent implements Runnable, KeyListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
+		if(e.getKeyCode() == 32){
+			b = true;
+		}
 		
 	}
 
