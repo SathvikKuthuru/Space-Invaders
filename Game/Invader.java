@@ -1,4 +1,4 @@
-import java.awt.Color;
+import java.awt.Color; 
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -13,6 +13,8 @@ public class Invader extends JComponent implements Runnable, KeyListener {
 	Player player = new Player();
 	Bullet bullet = new Bullet();
 	static boolean b = false;
+	static int score = 0;
+	static int level = 1;
 	
 	public Invader() {
 		
@@ -37,7 +39,9 @@ public class Invader extends JComponent implements Runnable, KeyListener {
 		
 		bullet.paint(g, this);
 		player.paint(g, this);
-
+		g.setColor(Color.green);
+		g.drawString("Score: " + Integer.toString(score), 600, 50);
+		g.drawString("Level " + Integer.toString(level), 400, 50);
 	}
 
 	public static void main(String[] args) {
@@ -56,28 +60,30 @@ public class Invader extends JComponent implements Runnable, KeyListener {
 		while (true) {
 			for(Enemy e : enemy){
 				e.update();
-			}
-			if(enemy.get(5).reachedEdge(enemy.get(5).x) || enemy.get(0).reachedEdge(enemy.get(0).x)){
-				for(int i = 0; i < 6; i++){
+			}if(enemy.size() > 0){  
+				System.out.println(enemy.size());
+			if(enemy.get(enemy.size()/2).reachedEdge(enemy.get(enemy.size()/2).x) || enemy.get(0).reachedEdge(enemy.get(0).x)){
+				for(int i = 0; i < enemy.size(); i++){
 					enemy.get(i).y += 50;
 					enemy.get(i).vx = -enemy.get(i).vx; 
-				}
+				} 
 			}
-			if(enemy.get(11).reachedEdge(enemy.get(11).x) || enemy.get(6).reachedEdge(enemy.get(6).x)){
-				for(int i = 6; i < 12; i++){
-					enemy.get(i).y += 50;
-					enemy.get(i).vx = -enemy.get(i).vx; 
-				}
-			}
+		}
+
 			for(int i = enemy.size()-1; i >= 0; i--){
 				if(b && !bullet.doesHit(enemy.get(i).x, enemy.get(i).y)){
 					bullet.update();
-
+					if(bullet.y <= 0) {
+						bullet.y = 600;
+						b = false;
+					}
 				}
 				else{
 					if(bullet.doesHit(enemy.get(i).x, enemy.get(i).y)) enemy.remove(enemy.get(i));
 					bullet.x =  player.x + 37;
 					bullet.y = 600;
+					b= false;
+					score += 100;
 					break;
 				}
 			}
