@@ -14,6 +14,8 @@ public class Invader extends JComponent implements Runnable, KeyListener {
 	Player player = new Player();
 	Bullet bullet = new Bullet();
 	static boolean b = false;
+	static boolean left = false;
+	static boolean right = false;
 	static int score = 0;
 	static int level = 1;
 	
@@ -135,6 +137,14 @@ public class Invader extends JComponent implements Runnable, KeyListener {
 					break;
 				}
 			}
+			if(left){
+				player.moveLeft();
+				left = false;
+			}
+			else if(right){
+				 player.moveRight();
+				 right = false;
+			}
 			
 			
 			/*for(Enemy e : enemy){
@@ -183,10 +193,10 @@ public class Invader extends JComponent implements Runnable, KeyListener {
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getKeyCode() == 37){
-			player.moveLeft();
+			left = true;
 		}
 		if(e.getKeyCode() == 39){
-			player.moveRight();
+			right = true;
 		}
 
 		
